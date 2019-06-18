@@ -4,6 +4,7 @@
 *.iws
 *.iml
 out/
+target/
 
 ### Java template
 *.class
