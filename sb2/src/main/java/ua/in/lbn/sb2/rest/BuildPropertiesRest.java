@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +29,7 @@ public class BuildPropertiesRest {
         return ResponseEntity.of(Optional.of(new BuildPropertiesOut(buildProperties)));
     }
 
+    @SuppressWarnings("unused")
     public static class BuildPropertiesOut {
 
         final String artifact;
@@ -63,7 +66,7 @@ public class BuildPropertiesRest {
         }
 
         public String getTime() {
-            return time;
+            return Date.from(Instant.ofEpochMilli(Long.parseLong(time))).toString();
         }
 
         public String getVersion() {
