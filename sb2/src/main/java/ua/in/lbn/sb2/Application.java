@@ -1,15 +1,18 @@
 package ua.in.lbn.sb2;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Application {
 
-    @SuppressWarnings("squid:S106")
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
-        System.out.println("Swagger2: http://localhost/swagger-ui.html");
-        System.out.println("Actuator: http://localhost/actuator");
+        log.info("Swagger2: http://localhost/swagger-ui.html");
+        log.info("Actuator: http://localhost/actuator");
 
         SpringApplication.run(Application.class, args);
     }
