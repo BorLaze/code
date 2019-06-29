@@ -13,6 +13,7 @@ public class Application {
     public static void main(String[] args) {
         log.info("Swagger2: http://localhost/swagger-ui.html");
         log.info("Actuator: http://localhost/actuator");
+        log.info("H2 console: http://localhost/h2 url=jdbc:h2:file:/tmp/h2db;AUTO_SERVER=TRUE");
 
         SpringApplication.run(Application.class, args);
     }
