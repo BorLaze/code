@@ -21,7 +21,7 @@ class PersonRestIT {
     private MockMvc mockMvc;
 
     @Test
-    void getBuildProperties() throws Exception {
+    void all() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/persons")
                         .contentType(MediaType.APPLICATION_JSON)
