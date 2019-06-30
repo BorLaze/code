@@ -32,7 +32,7 @@ class BuildPropertiesRestIT {
     @Test
     void getBuildProperties() throws Exception {
         MvcResult result = mockMvc.perform(
-                MockMvcRequestBuilders.get("/build")
+                MockMvcRequestBuilders.get("/build-properties")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
