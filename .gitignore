@@ -19,3 +19,9 @@ target/
 
 hs_err_pid*
 
+### Eclipse template
+.DS_Store
+.settings
+.project
+.factorypath
+.classpath
