@@ -1,5 +1,7 @@
 package ua.in.lbn.sb2.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -19,10 +21,17 @@ import static com.google.common.collect.Maps.newHashMap;
 @RequestMapping("build-properties")
 public class BuildPropertiesRest {
 
+    private static final Logger log = LoggerFactory.getLogger(BuildPropertiesRest.class);
+
     private final Map<String, Serializable> info = newHashMap();
 
     public BuildPropertiesRest(BuildProperties buildProperties) {
         Assert.notNull(buildProperties, "buildProperties == null");
+
+        if (!buildProperties.iterator().hasNext()) {
+            log.warn("BuildProperties are empty!");
+            return;
+        }
 
         info.put("artifact", buildProperties.getArtifact());
         info.put("group", buildProperties.getGroup());
