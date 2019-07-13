@@ -3,6 +3,7 @@ package ua.in.lbn.sb2;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
 import org.springframework.boot.info.BuildProperties;
+import org.springframework.boot.info.GitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,6 +18,12 @@ public class ApplicationConfig {
     @ConditionalOnMissingBean
     public BuildProperties buildProperties() {
         return new BuildProperties(new Properties());
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public GitProperties gitProperties() {
+        return new GitProperties(new Properties());
     }
 
 }

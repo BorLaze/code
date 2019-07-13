@@ -20,9 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-class BuildPropertiesRestIT {
+class AppInfoRestIT {
 
-    private static final Logger log = LoggerFactory.getLogger(BuildPropertiesRestIT.class);
+    private static final Logger log = LoggerFactory.getLogger(AppInfoRestIT.class);
 
     @Autowired
     ObjectMapper objectMapper;
@@ -30,13 +30,14 @@ class BuildPropertiesRestIT {
     private MockMvc mockMvc;
 
     @Test
+    @SuppressWarnings("squid:S00112")
     void getBuildProperties() throws Exception {
         MvcResult result = mockMvc.perform(
-                MockMvcRequestBuilders.get("/build-properties")
+                MockMvcRequestBuilders.get("/" + AppInfoRest.PATH)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.group", is("ua.in.lbn")))
+                .andExpect(jsonPath("$.['build.group']", is("ua.in.lbn")))
                 .andReturn();
 
         String json = result.getResponse().getContentAsString();
