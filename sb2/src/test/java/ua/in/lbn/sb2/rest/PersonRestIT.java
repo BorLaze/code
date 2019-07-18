@@ -145,6 +145,34 @@ class PersonRestIT extends FlywayIT {
     }
 
     @Test
+    void updateWithLocationIds() throws Exception {
+        String json = "" +
+                "{\n" +
+                "    \"name\": \"U-name\",\n" +
+                "    \"locations\": [1,2]\n" +
+                "}";
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/" + PersonRest.PATH + "/{id}", "1")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.locations", hasSize(2)))
+                .andExpect(jsonPath("$.locations[*].id", containsInAnyOrder(1, 2)))
+        ;
+
+        Optional<Person> optionalPerson_Eva = personService.read(2);
+
+        assertTrue(optionalPerson_Eva.isPresent());
+        assertTrue(optionalPerson_Eva.get().getLocations().isEmpty());
+
+        log.debug("person(2): {}", optionalPerson_Eva.orElseThrow(null));
+    }
+
+    @Test
     void updateNonExistingPerson() throws Exception {
         String json = "" +
                 "{\n" +

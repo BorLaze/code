@@ -8,6 +8,16 @@ public class LocationDto {
     private Long zip;
     private String city;
 
+    @SuppressWarnings("unused")
+    protected LocationDto() {
+        // JSON
+    }
+
+    @SuppressWarnings("unused")
+    protected LocationDto(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
