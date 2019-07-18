@@ -17,8 +17,6 @@
             <AppenderRef ref="Console"/>
         </Root>
 
-        <Logger level="debug" name="org.springframework.web.filter.CommonsRequestLoggingFilter"/>
-
         <Logger name="ua.in.lbn" level="debug"/>
     </Loggers>
 </Configuration>
