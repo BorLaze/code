@@ -10,6 +10,7 @@ import ua.in.lbn.sb2.domain.Person;
 import ua.in.lbn.sb2.repository.PersonRepository;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,15 +26,13 @@ class PersonServiceImplTest {
     void setup() {
         personService = new PersonServiceImpl(personRepository);
 
-        List<Person> personList = newArrayList(
-                new Person(11L, "A"),
-                new Person(22L, "B")
-        );
-
         when(
                 personRepository.findAll()
         ).thenReturn(
-                personList
+                newArrayList(
+                        new Person(11L, "A", newHashSet()),
+                        new Person(22L, "B", newHashSet())
+                )
         );
 
     }

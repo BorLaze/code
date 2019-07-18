@@ -7,13 +7,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import ua.in.lbn.sb2.FlywayIT;
 import ua.in.lbn.sb2.domain.Person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
-class PersonServiceImplIT {
+class PersonServiceImplIT extends FlywayIT {
 
     @Autowired
     private PersonService personService;
@@ -22,6 +23,6 @@ class PersonServiceImplIT {
     void all() {
         List<Person> personList = personService.all();
 
-        assertEquals(2, personList.size());
+        assertEquals(3, personList.size());
     }
 }
