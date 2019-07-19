@@ -5,5 +5,4 @@ values (1, 1, 'Atlanta', 1),
        (4, 4, 'Liverpool', 3)
 ;
 
-alter table location
-    alter column id restart with 5;
+alter sequence location_id_seq restart with 5;

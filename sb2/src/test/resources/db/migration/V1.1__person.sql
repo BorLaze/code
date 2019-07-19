@@ -4,5 +4,4 @@ values (1, 'Adam'),
        (3, 'Lilith')
 ;
 
-alter table person
-    alter column id restart with 4;
+alter sequence person_id_seq restart with 4;

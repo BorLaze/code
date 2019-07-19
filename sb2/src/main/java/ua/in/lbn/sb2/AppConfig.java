@@ -1,5 +1,6 @@
 package ua.in.lbn.sb2;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
@@ -11,7 +12,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
+import java.io.IOException;
 import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import io.zonky.test.db.postgres.embedded.EmbeddedPostgres;
 
 @Configuration
 @Import({ProjectInfoAutoConfiguration.class})
@@ -47,5 +53,33 @@ public class AppConfig {
         loggingFilter.setIncludeQueryString(true);
         loggingFilter.setIncludePayload(true);
         return loggingFilter;
+    }
+
+    @Bean
+    public DataSource dataSource() throws IOException {
+        String locale = "locale";
+        String lcMessages = "lc-messages";
+
+        EmbeddedPostgres.Builder builder;
+
+        if (SystemUtils.IS_OS_WINDOWS) {
+            builder = EmbeddedPostgres.builder()
+                    .setLocaleConfig(locale, "en-us")
+                    .setLocaleConfig(lcMessages, "en-us");
+        } else if (SystemUtils.IS_OS_MAC) {
+            builder = EmbeddedPostgres.builder()
+                    .setLocaleConfig(locale, "en_US")
+                    .setLocaleConfig(lcMessages, "en_US");
+        } else if (SystemUtils.IS_OS_LINUX) {
+            builder = EmbeddedPostgres.builder()
+                    .setLocaleConfig(locale, "en_US.utf8")
+                    .setLocaleConfig(lcMessages, "en_US.utf8");
+        } else {
+            throw new RuntimeException("System not detected!");
+        }
+
+        return builder
+                .start()
+                .getPostgresDatabase();
     }
 }
