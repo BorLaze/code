@@ -27,12 +27,14 @@ public class AppInfoRest {
     private final Map<String, Serializable> info = newLinkedHashMap();
 
     public AppInfoRest(BuildProperties buildProperties, GitProperties gitProperties) {
-        mergeProperties(buildProperties, "build");
-        info.put("build.timestamp", buildProperties.getInstant("time"));
+        if (mergeProperties(buildProperties, "build")) {
+            info.put("build.timestamp", buildProperties.getInstant("time"));
+        }
 
-        mergeProperties(gitProperties, "git");
-        info.put("git.commit.timestamp", gitProperties.getInstant("commit.time"));
-        info.put("git.build.timestamp", gitProperties.getInstant("build.time"));
+        if (mergeProperties(gitProperties, "git")) {
+            info.put("git.commit.timestamp", gitProperties.getInstant("commit.time"));
+            info.put("git.build.timestamp", gitProperties.getInstant("build.time"));
+        }
     }
 
     @GetMapping
@@ -40,13 +42,15 @@ public class AppInfoRest {
         return ResponseEntity.of(Optional.of(info));
     }
 
-    private void mergeProperties(InfoProperties properties, String prefix) {
+    private boolean mergeProperties(InfoProperties properties, String prefix) {
         if (!properties.iterator().hasNext()) {
             log.warn("{} properties are empty!", prefix);
-            return;
+            return false;
         }
         for (InfoProperties.Entry e : properties) {
             info.put(prefix + "." + e.getKey(), e.getValue());
         }
+
+        return true;
     }
 }
