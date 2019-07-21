@@ -1,4 +1,4 @@
-package ua.in.lbn.bj.domain;
+package ua.in.lbn.bj.table;
 
 public class Card {
 
@@ -19,7 +19,7 @@ public class Card {
         return rank.toString() + suit.toString();
     }
 
-    enum Suit {
+    public enum Suit {
         SPADES("♠"),
         CLOVERS("♣"),
         DIAMONDS("♦"),
@@ -37,7 +37,7 @@ public class Card {
         }
     }
 
-    enum Rank {
+    public enum Rank {
         ACE(1),
         TWO(2),
         THREE(3),

@@ -1,4 +1,4 @@
-package ua.in.lbn.bj.domain;
+package ua.in.lbn.bj.table;
 
 import java.util.Collections;
 import java.util.List;

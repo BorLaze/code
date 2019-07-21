@@ -1,4 +1,4 @@
-package ua.in.lbn.bj.domain;
+package ua.in.lbn.bj.table;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,14 +13,14 @@ class Deck52Test {
     void takeAllCards() {
         Deck52 d = new Deck52();
 
-        Optional<Card> oc = Optional.empty();
+        Optional<Card> optionalCard = Optional.empty();
         for (int i = 0; i < 52; i++) {
-            oc = d.next();
+            optionalCard = d.next();
         }
 
-        assertTrue(oc.isPresent());
-        oc = d.next();
-        assertFalse(oc.isPresent());
+        assertTrue(optionalCard.isPresent());
+        optionalCard = d.next();
+        assertFalse(optionalCard.isPresent());
     }
 
     @Test
