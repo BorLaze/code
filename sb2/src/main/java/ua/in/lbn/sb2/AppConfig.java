@@ -57,28 +57,25 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() throws IOException {
-        String locale = "locale";
-        String lcMessages = "lc-messages";
-
-        EmbeddedPostgres.Builder builder;
+        String localeValue;
+        String lcMessagesValue;
 
         if (SystemUtils.IS_OS_WINDOWS) {
-            builder = EmbeddedPostgres.builder()
-                    .setLocaleConfig(locale, "en-us")
-                    .setLocaleConfig(lcMessages, "en-us");
+            localeValue = "en-us";
+            lcMessagesValue = "en-us";
         } else if (SystemUtils.IS_OS_MAC) {
-            builder = EmbeddedPostgres.builder()
-                    .setLocaleConfig(locale, "en_US")
-                    .setLocaleConfig(lcMessages, "en_US");
+            localeValue = "en_US";
+            lcMessagesValue = "en_US";
         } else if (SystemUtils.IS_OS_LINUX) {
-            builder = EmbeddedPostgres.builder()
-                    .setLocaleConfig(locale, "en_US.utf8")
-                    .setLocaleConfig(lcMessages, "en_US.utf8");
+            localeValue = "en_US.utf8";
+            lcMessagesValue = "en_US.utf8";
         } else {
-            throw new RuntimeException("System not detected!");
+            throw new IllegalStateException("System not detected!");
         }
 
-        return builder
+        return EmbeddedPostgres.builder()
+                .setLocaleConfig("locale", localeValue)
+                .setLocaleConfig("lc-messages", lcMessagesValue)
                 .start()
                 .getPostgresDatabase();
     }
