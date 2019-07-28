@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.StringJoiner;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     private String name;
@@ -28,7 +30,7 @@ public class Person {
             orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "person_fk")
+    @JoinColumn(name = "person_fk", columnDefinition = "serial")
     private Set<Location> locations = newHashSet();
 
     @SuppressWarnings("unused")

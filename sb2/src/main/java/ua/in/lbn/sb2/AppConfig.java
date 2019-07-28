@@ -4,6 +4,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.info.GitProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -22,6 +24,12 @@ import io.zonky.test.db.postgres.embedded.EmbeddedPostgres;
 @Configuration
 @Import({ProjectInfoAutoConfiguration.class})
 public class AppConfig {
+
+    private final DataSourceProperties dataSourceProperties;
+
+    public AppConfig(DataSourceProperties dataSourceProperties) {
+        this.dataSourceProperties = dataSourceProperties;
+    }
 
     @Bean
     public ModelMapper modelMapper() {
@@ -73,7 +81,13 @@ public class AppConfig {
             throw new IllegalStateException("System not detected!");
         }
 
+        URI uri = URI.create(URI.create(dataSourceProperties.getUrl()).getSchemeSpecificPart());
+        int port = uri.getPort();
+
         return EmbeddedPostgres.builder()
+                .setCleanDataDirectory(false)
+                .setDataDirectory("/z/code/.postgres")
+                .setPort(port)
                 .setLocaleConfig("locale", localeValue)
                 .setLocaleConfig("lc-messages", lcMessagesValue)
                 .start()
