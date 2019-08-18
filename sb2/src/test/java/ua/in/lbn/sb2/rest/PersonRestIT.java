@@ -19,6 +19,7 @@ import ua.in.lbn.sb2.service.PersonService;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -107,6 +108,7 @@ class PersonRestIT extends FlywayIT {
     void update() throws Exception {
         String json = "" +
                 "{\n" +
+                "    \"id\": 2,\n" +
                 "    \"name\": \"U-name\",\n" +
                 "    \"locations\": [\n" +
                 "        {\n" +
@@ -139,6 +141,7 @@ class PersonRestIT extends FlywayIT {
         Optional<Person> optionalPerson_Eva = personService.read(2);
 
         assertTrue(optionalPerson_Eva.isPresent());
+        assertEquals("Eva", optionalPerson_Eva.get().getName());
         assertTrue(optionalPerson_Eva.get().getLocations().isEmpty());
 
         log.debug("person(2): {}", optionalPerson_Eva.orElseThrow(null));

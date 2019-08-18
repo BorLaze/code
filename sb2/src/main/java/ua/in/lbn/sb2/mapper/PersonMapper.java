@@ -46,6 +46,7 @@ public class PersonMapper {
 
     private void setupPersonMapping() {
         modelMapper.createTypeMap(PersonDto.class, Person.class)
+                .addMappings(mapper -> mapper.skip(Person::setId))
                 .addMappings(
                         mapper -> mapper
                                 .using(getDtosToLocationsConverter())

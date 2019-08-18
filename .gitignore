@@ -1,5 +1,7 @@
-### JetBrains template
+### project template
+.postgres
 
+### JetBrains template
 .idea/
 *.iws
 *.iml
