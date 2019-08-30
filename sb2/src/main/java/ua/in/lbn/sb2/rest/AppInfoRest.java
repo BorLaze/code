@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.google.common.collect.Maps.newLinkedHashMap;
+import static com.google.common.collect.Maps.newTreeMap;
 
 @RestController
 @RequestMapping(AppInfoRest.PATH)
@@ -24,7 +24,7 @@ public class AppInfoRest {
 
     private static final Logger log = LoggerFactory.getLogger(AppInfoRest.class);
 
-    private final Map<String, Serializable> info = newLinkedHashMap();
+    private final Map<String, Serializable> info = newTreeMap();
 
     public AppInfoRest(BuildProperties buildProperties, GitProperties gitProperties) {
         if (mergeProperties(buildProperties, "build")) {
