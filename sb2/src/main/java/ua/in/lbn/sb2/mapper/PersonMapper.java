@@ -55,15 +55,11 @@ public class PersonMapper {
     }
 
     private Converter<Set<LocationDto>, Set<Location>> getDtosToLocationsConverter() {
-        return ctx -> {
-            Set<LocationDto> source = ctx.getSource();
-
-            return (source == null)
-                    ? newHashSet()
-                    : source.stream()
-                    .map(locationMapper::convert)
-                    .collect(Collectors.toSet());
-        };
+        return ctx -> (ctx.getSource() == null)
+               ? newHashSet()
+               : ctx.getSource().stream()
+                       .map(locationMapper::convert)
+                       .collect(Collectors.toSet());
     }
 
 }
